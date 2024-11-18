@@ -9,9 +9,9 @@ export default function Navbar({ children }) {
         <div className="flex flex-wrap items-center justify-between mx-auto py-4">
           <Link href="/home" className="flex items-center space-x-3">
             <img
-              src="https://flowbite.com/docs/images/logo.svg"
+              src="/images/Rebellion.svg"
               className="h-16"
-              alt="Flowbite Logo"
+              alt="Rebellion Logo"
             />
             <span className="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">
               Rebellion

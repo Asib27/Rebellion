@@ -43,7 +43,7 @@ export const Provider = () => {
               width={16}
               height={16}
               alt="google"
-              src={"/images/google.png"}
+              src={"/images/google-logo.png"}
               className="mr-4"
             />
             <p>Continue with Google</p>
