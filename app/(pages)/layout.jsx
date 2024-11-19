@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Navbar({ children }) {
   return (
     <div className="w-full h-full flex flex-col">
-      <nav className="text-xl bg-white border-gray-200 dark:bg-gray-900 px-10">
+      <nav className="sticky top-0 text-xl bg-white border-gray-200 dark:bg-gray-900 px-10">
         <div className="flex flex-wrap items-center justify-between mx-auto py-4">
           <Link href="/home" className="flex items-center space-x-3">
             <img
@@ -67,6 +67,11 @@ export default function Navbar({ children }) {
       </nav>
 
       <div className="px-10 flex-1">{children}</div>
+      <div className="px-10 mt-4 w-full bg-zinc-200 dark:bg-slate-900">
+          <div className="p-4 flex items-center justify-center">
+                Footer
+          </div>
+      </div>
     </div>
   );
 }
