@@ -16,7 +16,7 @@ let sidebarMenuDict = {
     "5": 10, "4": 10, "3": 5, "2" : 1, "1": 1
   },
   'Price': {
-    "1000-2000": 10, "2000-3000": 10, "3000-4000": 10, "4000-5000": 10, "5000-6000": 10
+    "< 2000": 10, "2000-3000": 10, "3000-4000": 10, "4000-5000": 10, "> 5000": 10
   },
   'Color': {
     'White': 2, 'Black': 5, 'Blue': 5, 'Red': 5, 'Green': 5
@@ -39,7 +39,6 @@ const ShowRating = ({rating_dict, filterState, updateFilterState}) => {
               <div className="flex gap-1 py-1 items-center">
                 <Checkbox 
                 checked={filterState["Rating"][5 - index]}
-                className='h-4 w-4' 
                 onCheckedChange={(e) => updateFilterState(st => {st['Rating'][5-index] = e})} />
                 <StarRating stars={5 - index} total={5}/>
                 <p>
@@ -60,18 +59,43 @@ const InnerAccordion = ({menu, filterState, updateFilterState}) => {
       <ShowRating rating_dict={sidebarMenuDict[menu]} filterState={filterState} updateFilterState={updateFilterState}/>
     )
   }
-  else {
-    return (
-      <div>
+  else if (menu === 'Color') {
+    return <div>
+      <AccordionContent className='p-0'>
       {       
         Object.keys(sidebarMenuDict[menu]).map((menuItem, index) => {
           return (
-              <AccordionContent key={index} className='p-0'>
-                {`${menuItem} - ${sidebarMenuDict[menu][menuItem]}`}
-              </AccordionContent>
+                <div key={index} className="flex gap-3 py-1 items-center">
+                  <Checkbox 
+                  checked={filterState[menu][menuItem]}
+                  className='h-4 w-4'
+                  onCheckedChange={(e) => updateFilterState(st => {st[menu][menuItem] = e})} />
+                  <p> {`${menuItem} (${sidebarMenuDict[menu][menuItem]})`} </p>
+                </div>
           );
         })
       }
+      </AccordionContent>
+      </div>
+  }
+  else {
+    return (
+      <div>
+      <AccordionContent className='p-0'>
+      {       
+        Object.keys(sidebarMenuDict[menu]).map((menuItem, index) => {
+          return (
+                <div key={index} className="flex gap-3 py-1 items-center">
+                  <Checkbox 
+                  checked={filterState[menu][menuItem]}
+                  className='h-4 w-4'
+                  onCheckedChange={(e) => updateFilterState(st => {st[menu][menuItem] = e})} />
+                  <p> {`${menuItem} (${sidebarMenuDict[menu][menuItem]})`} </p>
+                </div>
+          );
+        })
+      }
+      </AccordionContent>
       </div>
       
     )
@@ -84,7 +108,7 @@ export default function Checkout() {
       "5": true, "4": true, "3": true, "2" : true, "1": true
     },
     'Price': {
-      "< 2000": true, "2000-3000": true, "3000-4000": true, "4000-5000": true, " > 5000": true
+      "< 2000": true, "2000-3000": true, "3000-4000": true, "4000-5000": true, "> 5000": true
     },
     'Color': {
       'White': true, 'Black': true, 'Blue': true, 'Red': true, 'Green': true
@@ -101,20 +125,20 @@ export default function Checkout() {
   return ( 
   <div className="w-full flex max-h-svh">
     <div className="flex-[0.25] rounded-2xl bg-slate-200 dark:bg-slate-900">
+    <Accordion type="single" collapsible className="">
     {
       Object.keys(sidebarMenuDict).map((menu, index) => {
         return (
-          <Accordion type="multiple" className=""  key={index}>
-            <div className="px-5 pt-1">
+            <div key={index} className="px-5 pt-1">
               <AccordionItem value={menu}>
               <AccordionTrigger className='py-2 text-base'>{menu}</AccordionTrigger>
               <InnerAccordion menu={menu} filterState={filterState} updateFilterState={updateFilterState}/>
               </AccordionItem>
             </div>
-          </Accordion>
         )
       })
     }
+    </Accordion>
     
  
     </div>
