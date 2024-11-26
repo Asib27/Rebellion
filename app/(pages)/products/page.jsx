@@ -1,10 +1,5 @@
 'use client'
 
-import StarRating from "@/components/star-rating";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
-import { ShoppingBag } from "lucide-react";
-import { useState } from "react";
 import { useImmer } from "use-immer";
 import {
   Card,
@@ -14,11 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import ProductsSidebar from "./sidebar";
 
-
-let sidebarMenus = [
-  "Rating", "Price", "Color", "Brand", "Size"
-]
 
 let sidebarMenuDict = {
   'Rating': {
@@ -44,122 +36,24 @@ let sidebarMenuDict = {
   }
 }
 
-const ShowRating = ({rating_dict, filterState, updateFilterState}) => {
-  return (
-    <div className="">
-      <AccordionContent className="p-0">
-      {
-        Array.from({ length: 5 }, (_, index) => {
-          return (
-              <div key={index} className="flex gap-1 py-1 items-center">
-                <Checkbox 
-                checked={filterState["Rating"][5 - index]}
-                onCheckedChange={(e) => updateFilterState(st => {st['Rating'][5-index] = e})} />
-                <StarRating stars={5 - index} total={5}/>
-                <p>
-                  {`(${rating_dict[5 - index] ? rating_dict[5 - index]: 0})`}
-                </p>
-              </div>
-          )
-        })
-      }
-      </AccordionContent>
-    </div>
-  )
-}
-
-const InnerAccordion = ({menu, filterState, updateFilterState}) => {
-  if (menu === "Rating") {
-    return (
-      <ShowRating rating_dict={sidebarMenuDict[menu]} filterState={filterState} updateFilterState={updateFilterState}/>
-    )
-  }
-  else if (menu === 'Color') {
-    return <div>
-      <AccordionContent className='p-0'>
-      {       
-        Object.keys(sidebarMenuDict[menu]).map((menuItem, index) => {
-          return (
-                <div key={index} className="flex gap-3 py-1 items-center">
-                  <Checkbox 
-                  checked={filterState[menu][menuItem]}
-                  className='h-4 w-4'
-                  onCheckedChange={(e) => updateFilterState(st => {st[menu][menuItem] = e})} />
-                  <p> {`${menuItem} (${sidebarMenuDict[menu][menuItem]})`} </p>
-                </div>
-          );
-        })
-      }
-      </AccordionContent>
-      </div>
-  }
-  else {
-    return (
-      <div>
-      <AccordionContent className='p-0'>
-      {       
-        Object.keys(sidebarMenuDict[menu]).map((menuItem, index) => {
-          return (
-                <div key={index} className="flex gap-3 py-1 items-center">
-                  <Checkbox 
-                  checked={filterState[menu][menuItem]}
-                  className='h-4 w-4'
-                  onCheckedChange={(e) => updateFilterState(st => {st[menu][menuItem] = e})} />
-                  <p> {`${menuItem} (${sidebarMenuDict[menu][menuItem]})`} </p>
-                </div>
-          );
-        })
-      }
-      </AccordionContent>
-      </div>
-      
-    )
-  }
-}
 
 export default function Product() {
-  const [filterState, updateFilterState] = useImmer({
-    'Rating': {
-      "5": true, "4": true, "3": true, "2" : true, "1": true
-    },
-    'Price': {
-      "< 2000": true, "2000-3000": true, "3000-4000": true, "4000-5000": true, "> 5000": true
-    },
-    'Color': {
-      'White': true, 'Black': true, 'Blue': true, 'Red': true, 'Green': true
-    },
-    'Brand': {
-      'Nike': true, 'Adidas': true, 'Puma': true
-    },
-    'Size': {
-      '38': true, '39': true, '40': true, '41': true, '42': true, '43': true, '44': true
-    },
-    'Type': {
-      "Premium": true, "OEM": true, "1:1": true
-    },
-    'Height': {
-      "High Neck": true, "Low Neck": true
-    } 
-    })
+  let dummyState = {}
+
+  for (let category in sidebarMenuDict) {
+    dummyState[category] = {}
+    for (let key in sidebarMenuDict[category]) {
+      dummyState[category][key] = true;
+    }
+  }
+
+  const [filterState, updateFilterState] = useImmer(dummyState)
 
 
   return ( 
   <div className="w-full flex max-h-svh gap-6 mt-4">
     <div className="flex-[0.25] rounded-2xl bg-slate-200 dark:bg-slate-900">
-    <Accordion type="single" collapsible className="">
-    {
-      Object.keys(sidebarMenuDict).map((menu, index) => {
-        return (
-            <div key={index} className="px-5 pt-1">
-              <AccordionItem value={menu}>
-              <AccordionTrigger className='py-2 text-base'>{menu}</AccordionTrigger>
-              <InnerAccordion menu={menu} filterState={filterState} updateFilterState={updateFilterState}/>
-              </AccordionItem>
-            </div>
-        )
-      })
-    }
-    </Accordion>
+     <ProductsSidebar filterState={filterState} updateFilterState={updateFilterState} sidebarMenuDict={sidebarMenuDict} />
     
  
     </div>
