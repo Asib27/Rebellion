@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Moon } from "lucide-react"
 
-export function ModeToggle() {
+export function ModeToggle({className}) {
   const { setTheme } = useTheme()
 
   return (
-    <DropdownMenu>
+    <DropdownMenu className={className}>
       <DropdownMenuTrigger asChild>
         {
           <Moon size={30}/>
