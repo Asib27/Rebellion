@@ -10,6 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import ProductsSidebar from "./sidebar";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 
 let sidebarMenuDict = {
@@ -37,6 +39,31 @@ let sidebarMenuDict = {
 }
 
 
+const ProductCard = ({className, cardData}) => {
+  return (<Card className={cn(className, 'drop-shadow-xl')}>
+    <CardContent className='p-0'>
+      <Image className="w-full rounded-t-xl" src={cardData['image']} width={400} height={200} alt={cardData['name']} />
+    </CardContent>
+    <CardHeader>
+      <CardTitle>Card Title</CardTitle>
+      <CardDescription>Card Description</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <p>Card Content</p>
+    </CardContent>
+    <CardFooter>
+      <p>Card Footer</p>
+    </CardFooter>
+  </Card>);
+}
+
+const cardData = {
+  "name": "Nike Air Max",
+  "price": "150",
+  "image": "/temp_images/real_shoe1.png"
+}
+
+
 export default function Product() {
   let dummyState = {}
 
@@ -51,27 +78,23 @@ export default function Product() {
 
 
   return ( 
-  <div className="w-full flex max-h-svh gap-6 mt-4">
+  <div className="w-full flex gap-6 mt-4">
     <div className="flex-[0.25] rounded-2xl bg-slate-200 dark:bg-slate-900">
      <ProductsSidebar filterState={filterState} updateFilterState={updateFilterState} sidebarMenuDict={sidebarMenuDict} />
     
  
     </div>
 
-    <div className="h-full flex-1">
-      <div className="rounded-2xl bg-slate-200 dark:bg-slate-900 w-full h-500">
-        <Card>
-          <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
-        </Card>
+    <div className="flex-1">
+      <div className="rounded-2xl w-full h-500">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 ">
+          {Array.from({ length: 10 }, (_, index) => {
+            return (
+              <ProductCard className='transfrom-transition transform hover:scale-105 duration-300 ease-in-out cursor-pointer' cardData={cardData} key={index} />
+            )
+          })}
+        </div>
+        
 
       </div>
     </div>
