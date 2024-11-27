@@ -12,6 +12,8 @@ import {
 import ProductsSidebar from "./sidebar";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { ShoppingCart } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 
 let sidebarMenuDict = {
@@ -45,22 +47,28 @@ const ProductCard = ({className, cardData}) => {
       <Image className="w-full rounded-t-xl" src={cardData['image']} width={400} height={200} alt={cardData['name']} />
     </CardContent>
     <CardHeader>
-      <CardTitle>Card Title</CardTitle>
-      <CardDescription>Card Description</CardDescription>
+      <CardTitle>{cardData['name']}</CardTitle>
+      <CardDescription>
+        <p>{cardData['description']}</p>
+        <p>{`${Object.keys(cardData['colors']).length} colors`}</p>
+      </CardDescription>
     </CardHeader>
-    <CardContent>
-      <p>Card Content</p>
-    </CardContent>
-    <CardFooter>
-      <p>Card Footer</p>
+    <CardFooter className="flex items-center justify-between">
+      <p>{`Tk ${cardData['price']}`}</p>
+      
     </CardFooter>
   </Card>);
 }
 
 const cardData = {
   "name": "Nike Air Max",
+  "description": "Comfortable for all",
   "price": "150",
-  "image": "/temp_images/real_shoe1.png"
+  "image": "/temp_images/real_shoe1.png",
+  "colors": {
+    'red' : "/temp_images/shoe1.png",
+    'green' : "/temp_images/shoe2.png"
+  }
 }
 
 
