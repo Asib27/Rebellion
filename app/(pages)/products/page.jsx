@@ -61,6 +61,7 @@ const ProductCard = ({className, cardData}) => {
 }
 
 const cardData = {
+  "id": "1",
   "name": "Nike Air Max",
   "description": "Comfortable for all",
   "price": "150",
@@ -95,7 +96,7 @@ export default function Product() {
 
     <div className="flex-1">
       <div className="rounded-2xl w-full h-500">
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 ">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           {Array.from({ length: 10 }, (_, index) => {
             return (
               <ProductCard className='transfrom-transition transform hover:scale-105 duration-300 ease-in-out cursor-pointer' cardData={cardData} key={index} />

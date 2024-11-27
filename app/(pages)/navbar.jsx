@@ -15,12 +15,12 @@ export default function NavBar(){
           <div className="">
             <Link href="/home" className="flex items-center space-x-3">
               <img
-                src="/images/Rebellion.svg"
+                src="/images/Rebellion_trans.svg"
                 className="h-10"
                 alt="Rebellion Logo"
               />
               <p className="self-center text-3xl font-semibold dark:text-white">
-                Rebellion
+                REBELLION
               </p>
             </Link>
           </div>
