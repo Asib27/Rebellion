@@ -1,4 +1,4 @@
-# Getting started
+# Install
 
 ```bash
 bun install
@@ -8,3 +8,4 @@ bun run dev
 ```
 
 # TODO
+- [ ] Implement Cart
